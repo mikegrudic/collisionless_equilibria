@@ -36,24 +36,28 @@ phi = -1 / (1 + r)
 # print(np.average(phi)/2)
 v_e = (-2 * phi) ** 0.5
 
+
 # do Von Neumann sampling
-Fq = lambda rv, r: (
-    2
-    * r
-    * (1 + r) ** 4
-    * rv**2
-    * (
-        (
-            np.sqrt(-((-1 + rv**2) * (r + rv**2)))
-            * (-1 + r + 2 * rv**2)
-            * (-3 - 14 * r - 3 * r**2 + 8 * (-1 + r) * rv**2 + 8 * rv**4)
+def Fq(rv, r):
+    return (
+        2
+        * r
+        * (1 + r) ** 4
+        * rv**2
+        * (
+            (
+                np.sqrt(-((-1 + rv**2) * (r + rv**2)))
+                * (-1 + r + 2 * rv**2)
+                * (-3 - 14 * r - 3 * r**2 + 8 * (-1 + r) * rv**2 + 8 * rv**4)
+            )
+            / (1 + r) ** 4
+            + 3 * np.arcsin(np.sqrt((1 - rv**2) / (1 + r)))
         )
-        / (1 + r) ** 4
-        + 3 * np.arcsin(np.sqrt((1 - rv**2) / (1 + r)))
-    )
-) / (
-    np.pi * (r + rv**2) ** 2.5
-)  # distribution of velocity as a fraction of escape velocity, at a given radius r
+    ) / (
+        np.pi * (r + rv**2) ** 2.5
+    )  # distribution of velocity as a fraction of escape velocity, at a given radius r
+
+
 Qs = []
 
 
